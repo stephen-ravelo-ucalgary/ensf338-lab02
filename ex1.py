@@ -1,11 +1,22 @@
 '''
 Answer to Questions
-1. The function returns the n-th value of the Fibonacci sequence.
-2. The function represents a divide-and-conquer algorithm as it uses recursion
-to combine the results of each function call when it finally reaches n = 0
-or n = 1, ultimately returning the n-th value of the Fibonacci sequence.
-3. O(2^n)
-5.
+1.  The function returns the n-th value of the Fibonacci sequence.
+
+2.  The function does not represent a divide and conquer algorithm because throughout
+    its recursive solution calculations of the same n-th value are repeated,leading
+    to duplicated calculations and excessive memory use.
+
+3.  T(n) = T(n - 1) + T(n - 2) + 4
+    Assuming T(n - 2) is approximately equal to T(n - 1)
+    T(n) = 2^kT(n - k) + (2^k - 1)c
+    Putting into terms of T(0) = 1, k = n
+    T(n) = 2^nT(0) + (2^n - 1)c
+    T(n) = (1 + c)2^n - c
+    Simplifies to O(2^n)
+
+5.  Since memoize gets rid of duplicate calculations
+    T(n) = T(n) * 4
+    Simplifies to O(n)
 '''
 
 import timeit
