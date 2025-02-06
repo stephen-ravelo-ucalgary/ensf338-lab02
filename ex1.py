@@ -4,23 +4,21 @@ Answer to Questions
 2. The function represents a divide-and-conquer algorithm as it uses recursion
 to combine the results of each function call when it finally reaches n = 0
 or n = 1, ultimately returning the n-th value of the Fibonacci sequence.
-3. O(2^n) need expression
+3. O(2^n)
 5.
 '''
 
 import timeit
-import sys
 from functools import wraps
 import matplotlib.pyplot as plt
-import numpy as np
 
 # Question 4
 def memoize(func):      # decorator
     cache = {}          # memory, stores results for usage
-    @wraps(func)
+    @wraps(func)        # transfer data to actual function instead of wrapper function
     def wrapper(*args, **kwargs):
         key = str(args) + str(kwargs)
-        if key not in cache:    # add into cache if not in cache
+        if key not in cache:    # add key into cache if not in cache
             cache[key] = func(*args, **kwargs)
         return cache[key]
     return wrapper
