@@ -4,7 +4,7 @@ Answer to Questions
 2. The function represents a divide-and-conquer algorithm as it uses recursion
 to combine the results of each function call when it finally reaches n = 0
 or n = 1, ultimately returning the n-th value of the Fibonacci sequence.
-3. O(2^n)
+3. O(2^n) need expression
 5.
 '''
 
@@ -42,32 +42,25 @@ def orig_fibonacci(n):
         return orig_fibonacci(n - 1) + orig_fibonacci(n - 2)
     
 if __name__ == "__main__":
+    no_memo = []
+    with_memo = []
 
-    tm = timeit.timeit(lambda: fibonacci(20), number=1)
-    print(tm)
-    tm = timeit.timeit(lambda: orig_fibonacci(20), number=1)
-    print(tm)
-
-    no_memo = {}
-    with_memo = {}
-
+    # integers 1 - 34
     for i in range(1, 35):
         tm = timeit.timeit(lambda: orig_fibonacci(i), number=1)
-        no_memo[i] = tm
+        no_memo.append(tm)
 
-    print(no_memo)
-
+    # integers 1 - 34
     for i in range(1, 35):
         tm = timeit.timeit(lambda: fibonacci(i), number=1)
-        with_memo[i] = tm
-
-    no_memo = np.array(no_memo)
-    print(no_memo)
-    with_memo = np.array(with_memo)
+        with_memo.append(tm)
 
     x_values = list(range(1, 35))
-    x_values = np.array(x_values)
-    print(x_values)
     
-    plt.plot(x_values, no_memo)
+    plt.plot(x_values, no_memo, label = "No Memoization")
+    plt.plot(x_values, with_memo, label = "With Memoization")
+    plt.xlabel("Input Value (n)")
+    plt.ylabel("Time (seconds)")
+    plt.title("Fibonacci Sequence Timing")
+    plt.legend()
     plt.show()
