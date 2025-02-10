@@ -5,9 +5,9 @@ import numpy as np
 from scipy.optimize import curve_fit
 
 def linear_search(arr, key):
-    for index, value in enumerate(arr):
-        if (value == key):
-            return index
+    for i in range(len(arr)):
+        if (arr[i] == key):
+            return i
     return -1
 
 def binary_search(arr, first, last, key):
@@ -62,32 +62,44 @@ if __name__ == "__main__":
         linear_average = sum(lin_time) / len(lin_time)
         linear_averages.append(linear_average)
         binary_average = sum(bin_time) / len(bin_time)
-        binary_averages.append(sum(bin_time) / 1000)
+        binary_averages.append(binary_average)
         print("List length: %d\nLinear: %f\nBinary: %f\n" % (list_length, linear_average, binary_average))
 
-    fig = plt.figure()
+    fig = plt.figure(figsize=(1, 3))
 
     slope, intercept = np.polyfit(list_lengths, linear_averages, 1)
     line_values = [slope * x + intercept for x in list_lengths]
-    ax1 = fig.add_subplot(121)
-    ax1.plot(list_lengths, line_values, 'r', c='b', label="Fitted line")
-    ax1.scatter(list_lengths, linear_averages, c='black', label="Raw data")
-    ax1.set_title(r'')
-    ax1.set_ylabel('Time')
-    ax1.set_xlabel('List Length')
+    ax1 = fig.add_subplot(131)
+    ax1.plot(list_lengths, line_values, 'r', c='b', label="fitted line")
+    ax1.scatter(list_lengths, linear_averages, c='black', label="raw data")
+    ax1.set_title('linear search')
+    ax1.set_ylabel('time')
+    ax1.set_xlabel('list length')
     ax1.set_ylim(0)
     ax1.set_xlim(0)
     ax1.legend()
 
     x_fitted, y_fitted = log_curve_fit(list_lengths, binary_averages)
-    ax2 = fig.add_subplot(122)
-    ax2.plot(x_fitted, y_fitted, 'k', c='r', label="Fitted curve")
-    ax2.scatter(list_lengths, binary_averages, c='black')
-    ax2.set_title(r'')
-    ax2.set_ylabel('Time')
-    ax2.set_xlabel('List Length')
+    ax2 = fig.add_subplot(132)
+    ax2.plot(x_fitted, y_fitted, 'k', c='r', label="fitted curve")
+    ax2.scatter(list_lengths, binary_averages, c='black', label="raw data")
+    ax2.set_title('binary search')
+    ax2.set_ylabel('time')
+    ax2.set_xlabel('list Length')
     ax2.set_ylim(0)
     ax2.set_xlim(0)
     ax2.legend()
+
+    ax3 = fig.add_subplot(133)
+    ax3.plot(list_lengths, line_values, 'r', c='b', label="linear search")
+    ax3.scatter(list_lengths, linear_averages, c='black')
+    ax3.plot(x_fitted, y_fitted, 'k', c='r', label="binary search")
+    ax3.scatter(list_lengths, binary_averages, c='black')
+    ax3.set_title('linear vs binary')
+    ax3.set_ylabel('time')
+    ax3.set_xlabel('list length')
+    ax3.set_ylim(0)
+    ax3.set_xlim(0)
+    ax3.legend()
 
     plt.show()
