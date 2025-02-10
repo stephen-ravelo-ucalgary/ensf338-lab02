@@ -67,6 +67,13 @@ if __name__ == "__main__":
 
     fig = plt.figure(figsize=(1, 3))
 
+    '''
+    Calculates the slope and y-intercept of linear data through linear
+    interpolation using the list_lengths and linear_averages.
+
+    This produces a linear function which is as expected from a 
+    linear search algorithm.
+    '''
     slope, intercept = np.polyfit(list_lengths, linear_averages, 1)
     line_values = [slope * x + intercept for x in list_lengths]
     ax1 = fig.add_subplot(131)
@@ -79,6 +86,14 @@ if __name__ == "__main__":
     ax1.set_xlim(0)
     ax1.legend()
 
+    '''
+    Calculates a fitted curve using list_lengths, binary_averages, and 
+    3 guess properties of the function to predict 3 more accurate 
+    properties describing the logarithmic curve.
+
+    It produces a logarithmic curve which is expected from a binary
+    search algorithm.
+    '''
     x_fitted, y_fitted = log_curve_fit(list_lengths, binary_averages)
     ax2 = fig.add_subplot(132)
     ax2.plot(x_fitted, y_fitted, 'k', c='r', label="fitted curve")
